@@ -69,7 +69,8 @@ android {
         }
     }
     defaultConfig {
-        applicationId "org.groundplatform.android"
+        // applicationId "org.groundplatform.android"
+        applicationId "com.google.android.ground"
         minSdkVersion rootProject.androidMinSdk
         targetSdkVersion rootProject.androidTargetSdk
 
@@ -80,7 +81,7 @@ android {
         multiDexEnabled true
         // For rendering vector map markers.
         vectorDrawables.useSupportLibrary = true
-        buildConfigField "String", "EMULATOR_HOST", "\"10.0.2.2\""
+        buildConfigField "String", "EMULATOR_HOST", "\"192.168.1.7\""
         buildConfigField "int", "FIRESTORE_EMULATOR_PORT", "8080"
         buildConfigField "int", "AUTH_EMULATOR_PORT", "9099"
         buildConfigField "String", "SIGNUP_FORM_LINK", "\"\""
@@ -112,6 +113,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.staging
         }
         debug {
             ext.enableCrashlytics = false
@@ -180,6 +182,11 @@ configurations {
     groundProtoJar
 }
 
+// plugins {
+//   id("com.android.application")
+//   id("com.google.gms.google-services")
+// }
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
@@ -235,7 +242,7 @@ dependencies {
     testImplementation 'org.json:json:20180813'
 
     // Firebase and related libraries.
-    implementation platform('com.google.firebase:firebase-bom:33.1.2')
+    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-functions-ktx'
