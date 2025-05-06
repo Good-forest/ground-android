@@ -69,8 +69,8 @@ android {
         }
     }
     defaultConfig {
-        // applicationId "org.groundplatform.android"
-        applicationId "com.google.android.ground"
+        applicationId "org.groundplatform.android"
+        // applicationId "com.google.android.ground"
         minSdkVersion rootProject.androidMinSdk
         targetSdkVersion rootProject.androidTargetSdk
 
@@ -81,6 +81,7 @@ android {
         multiDexEnabled true
         // For rendering vector map markers.
         vectorDrawables.useSupportLibrary = true
+        // buildConfigField "String", "EMULATOR_HOST", "\"10.0.2.2\""
         buildConfigField "String", "EMULATOR_HOST", "\"192.168.1.7\""
         buildConfigField "int", "FIRESTORE_EMULATOR_PORT", "8080"
         buildConfigField "int", "AUTH_EMULATOR_PORT", "9099"
@@ -102,10 +103,10 @@ android {
     // https://stackoverflow.com/questions/3082780/java-lang-securityexception-permission-denial/38202106
     signingConfigs {
         staging {
-            keyPassword 'ground'
+            keyPassword 'android'
             storeFile file('../cloud-builder/sign/keystore')
-            storePassword 'ground'
-            keyAlias 'ground'
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
         }
     }
 
@@ -118,6 +119,7 @@ android {
         debug {
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
+            signingConfig signingConfigs.staging
             FirebasePerformance {
                 instrumentationEnabled false
             }
@@ -182,11 +184,6 @@ configurations {
     groundProtoJar
 }
 
-// plugins {
-//   id("com.android.application")
-//   id("com.google.gms.google-services")
-// }
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
@@ -229,7 +226,7 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-livedata:1.6.8'
 
     // Google Play Services.
-    implementation 'com.google.android.gms:play-services-auth:21.2.0'
+    implementation 'com.google.android.gms:play-services-auth:21.3.0'
     implementation 'com.google.android.gms:play-services-maps:19.0.0'
     implementation 'com.google.android.gms:play-services-location:21.3.0'
 
@@ -242,7 +239,7 @@ dependencies {
     testImplementation 'org.json:json:20180813'
 
     // Firebase and related libraries.
-    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+    implementation platform('com.google.firebase:firebase-bom:33.1.2')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-functions-ktx'
