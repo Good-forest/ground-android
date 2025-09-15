@@ -69,8 +69,10 @@ android {
         }
     }
     defaultConfig {
-        applicationId "org.groundplatform.android"
+        // applicationId "org.groundplatform.android"
         // applicationId "com.google.android.ground"
+        applicationId "fr.goodforest.ground"
+
         minSdkVersion rootProject.androidMinSdk
         targetSdkVersion rootProject.androidTargetSdk
 
@@ -81,8 +83,8 @@ android {
         multiDexEnabled true
         // For rendering vector map markers.
         vectorDrawables.useSupportLibrary = true
-        // buildConfigField "String", "EMULATOR_HOST", "\"10.0.2.2\""
-        buildConfigField "String", "EMULATOR_HOST", "\"192.168.1.7\""
+        buildConfigField "String", "EMULATOR_HOST", "\"10.0.2.2\""
+        // buildConfigField "String", "EMULATOR_HOST", "\"192.168.1.7\""
         buildConfigField "int", "FIRESTORE_EMULATOR_PORT", "8080"
         buildConfigField "int", "AUTH_EMULATOR_PORT", "9099"
         buildConfigField "String", "SIGNUP_FORM_LINK", "\"\""
