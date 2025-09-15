@@ -116,7 +116,7 @@ tasks.register('clean', Delete) {
 // https://github.com/passsy/gradle-gitVersioner-plugin
 apply plugin: "de.sharpmind.gitversioner"
 gitVersioner {
-    baseBranch "master"
+    baseBranch "tests"
 }
 
 ext {
