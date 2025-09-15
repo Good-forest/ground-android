@@ -1,6 +1,6 @@
 .*
 secret.properties
-*.aap
+*.aab
 **/google-services.json
 secrets.properties
 !app/src/debug/local/google-services.json
