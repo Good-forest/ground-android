@@ -1,4 +1,5 @@
 .*
+secrets.properties
 *.aap
 **/google-services.json
 secrets.properties
