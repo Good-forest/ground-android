@@ -105,10 +105,10 @@ android {
     // https://stackoverflow.com/questions/3082780/java-lang-securityexception-permission-denial/38202106
     signingConfigs {
         staging {
-            keyPassword 'android'
-            storeFile file('../cloud-builder/sign/keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
+            keyPassword 'Salim123+'
+            storeFile file('/home/yoan/Documents/keypass.jks')
+            storePassword 'Salim123+'
+            keyAlias 'key0'
         }
     }
 
