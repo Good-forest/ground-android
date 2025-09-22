@@ -59,6 +59,13 @@ import org.groundplatform.android.ui.home.mapcontainer.jobs.SelectedLoiSheetData
 import org.groundplatform.android.ui.map.Feature
 import org.groundplatform.android.ui.map.isLocationOfInterest
 import org.groundplatform.android.usecases.datasharingterms.GetDataSharingTermsUseCase
+// # import random 
+import kotlin.random.Random
+// import color
+import android.graphics.Color
+// import timber
+import timber.log.Timber
+
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @SharedViewModel
@@ -129,6 +136,7 @@ internal constructor(
   init {
     // THIS SHOULD NOT BE CALLED ON CONFIG CHANGE
 
+    // YOYO HERE LOI ADDED
     @OptIn(FlowPreview::class)
     mapLoiFeatures =
       activeSurvey.flatMapLatest {
@@ -214,6 +222,20 @@ internal constructor(
     localValueStore.setDataSharingConsent(survey.id, true)
   }
 
+  private fun getStrokeRatio(loi: LocationOfInterest): Float {
+    return if (loi.properties["ano_class"] == "Moyenne anomalie") {
+      1f
+    } else {
+      2f
+    }
+  }
+
+  private fun getRandomColor(loi: LocationOfInterest): Int {
+    val random = Random(loi.properties["week"].hashCode().toLong())
+
+    return Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
+  }
+
   private fun getLocationOfInterestFeatures(survey: Survey): Flow<Set<Feature>> =
     loiRepository.getValidLois(survey).map { it.map { loi -> loi.toFeature() }.toPersistentSet() }
 
@@ -223,9 +245,10 @@ internal constructor(
       type = org.groundplatform.android.ui.map.FeatureType.LOCATION_OF_INTEREST.ordinal,
       flag = submissionRepository.getTotalSubmissionCount(this) > 0,
       geometry = geometry,
-      style = org.groundplatform.android.ui.map.Feature.Style(job.getDefaultColor()),
+      style = org.groundplatform.android.ui.map.Feature.Style(getRandomColor(this)),
       clusterable = true,
       selected = true,
+      strokeRatio = getStrokeRatio(this),
     )
 
   fun selectLocationOfInterest(id: String?) {

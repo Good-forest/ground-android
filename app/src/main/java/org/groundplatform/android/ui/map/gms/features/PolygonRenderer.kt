@@ -28,6 +28,15 @@ import org.groundplatform.android.ui.map.Feature
 import org.groundplatform.android.ui.map.gms.POLYGON_Z
 import org.groundplatform.android.ui.map.gms.toLatLng
 import org.groundplatform.android.ui.map.gms.toLatLngList
+import timber.log.Timber
+import android.graphics.Color
+
+fun getColorWithAlpha(yourColor: Int, alpha: Int): Int {
+    val red = Color.red(yourColor);
+    val blue = Color.blue(yourColor);
+    val green = Color.green(yourColor);
+    return Color.argb(alpha, red, green, blue);
+}
 
 class PolygonRenderer @Inject constructor(resources: Resources) :
   MapsItemRenderer<Polygon, MapsPolygon> {
@@ -41,18 +50,27 @@ class PolygonRenderer @Inject constructor(resources: Resources) :
     selected: Boolean,
     visible: Boolean,
     tooltipText: String?,
+    strokeRatio: Float?,
   ): MapsPolygon {
     check(tooltipText == null) { "Tooltip text not implemented for polygon features" }
     val strokeScale = if (selected) 2f else 1f
+    val sR = strokeRatio ?: 1f
     val options = PolygonOptions()
+
+    var opacity = 100
+    if (sR != 2f) {
+      opacity = 50
+    }
+    val fillColor = getColorWithAlpha(style.color, opacity)
     with(options) {
       addAll(geometry.shell.coordinates.map { it.toLatLng() })
       geometry.holes.forEach { addHole(it.coordinates.toLatLngList()) }
       clickable(false)
       visible(visible)
       zIndex(POLYGON_Z)
-      strokeWidth(defaultStrokeWidth * strokeScale)
+      strokeWidth(defaultStrokeWidth * strokeScale * sR)
       strokeColor(style.color)
+      fillColor(fillColor)
       strokeJointType(JointType.ROUND)
     }
 

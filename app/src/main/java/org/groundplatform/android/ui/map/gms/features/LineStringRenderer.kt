@@ -33,6 +33,7 @@ import org.groundplatform.android.ui.util.BitmapUtil
 import org.groundplatform.android.util.midpoint
 import org.groundplatform.android.util.penult
 
+
 class LineStringRenderer
 @Inject
 constructor(
@@ -57,6 +58,7 @@ constructor(
     selected: Boolean,
     visible: Boolean,
     tooltipText: String?,
+    strokeRatio: Float?,
   ): Polyline {
     val options = PolylineOptions()
     with(options) {
@@ -74,7 +76,8 @@ constructor(
 
       val strokeScale = if (selected) 2f else 1f
       width = defaultStrokeWidth * strokeScale
-      color = style.color
+      color = Feature.Style(color = 0xFF000000.toInt()).color
+      // color = style.color
       jointType = JointType.ROUND
       zIndex = POLYLINE_Z
     }

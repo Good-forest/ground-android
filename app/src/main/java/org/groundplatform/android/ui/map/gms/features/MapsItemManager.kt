@@ -27,6 +27,9 @@ import org.groundplatform.android.model.geometry.MultiPolygon
 import org.groundplatform.android.model.geometry.Point
 import org.groundplatform.android.model.geometry.Polygon
 import org.groundplatform.android.ui.map.Feature
+// import timber
+import timber.log.Timber
+
 
 /** Manages [Feature]s displayed on the map as Maps SDK items (marker, polyline, etc). */
 class MapsItemManager(
@@ -37,11 +40,13 @@ class MapsItemManager(
 ) {
   private val itemsByTag = mutableMapOf<Feature.Tag, List<Any>>()
 
+
   /**
    * Adds one or more items to the map representing the specified [Feature], replacing and existing
    * items associated with same tag are replaced.
    */
   fun put(feature: Feature, visible: Boolean) =
+
     with(feature) {
       // If map item with this tag already exists, remove it.
       remove(tag)
@@ -49,9 +54,9 @@ class MapsItemManager(
       itemsByTag[tag] =
         when (geometry) {
           is Point -> listOf(pointRenderer.add(map, tag, geometry, style, selected, visible))
-          is Polygon -> listOf(polygonRenderer.add(map, tag, geometry, style, selected, visible))
+          is Polygon -> listOf(polygonRenderer.add(map, tag, geometry, style, selected, visible, null, strokeRatio))
           is MultiPolygon ->
-            geometry.polygons.map { polygonRenderer.add(map, tag, it, style, selected, visible) }
+            geometry.polygons.map { polygonRenderer.add(map, tag, it, style, selected, visible, null, strokeRatio) }
           is LineString ->
             listOf(
               lineStringRenderer.add(map, tag, geometry, style, selected, visible, tooltipText)

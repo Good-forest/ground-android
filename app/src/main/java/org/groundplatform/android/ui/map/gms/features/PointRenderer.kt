@@ -48,6 +48,7 @@ constructor(resources: Resources, private val markerIconFactory: IconFactory) :
     selected: Boolean,
     visible: Boolean,
     tooltipText: String?,
+    strokeRatio: Float?,
   ): Marker {
     check(tooltipText == null) { "Tooltip text not implemented for point features" }
     val markerOptions = MarkerOptions()

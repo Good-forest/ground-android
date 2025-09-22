@@ -28,5 +28,6 @@ interface MapsItemRenderer<T : Geometry, U> {
     selected: Boolean,
     visible: Boolean,
     tooltipText: String? = null,
+    strokeRatio: Float? = null
   ): U
 }
